@@ -21,7 +21,7 @@ namespace PermissionManagement.Web.Seeds
             var role = await roleManager.FindByNameAsync(Roles.Member.ToString());
             var allClaims = await roleManager.GetClaimsAsync(role);
             var pages = Enum.GetValues(typeof(Pages)).Cast<Pages>().ToList();
-            var blocks = Enum.GetValues(typeof(Pages)).Cast<Blocks>().ToList();
+            var blocks = Enum.GetValues(typeof(Blocks)).Cast<Blocks>().ToList();
 
             if (role != null)
             {

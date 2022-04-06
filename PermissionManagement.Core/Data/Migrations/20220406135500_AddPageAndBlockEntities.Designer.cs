@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PermissionManagement.Web.Data;
 
@@ -11,9 +12,10 @@ using PermissionManagement.Web.Data;
 namespace PermissionManagement.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220406135500_AddPageAndBlockEntities")]
+    partial class AddPageAndBlockEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,38 +234,6 @@ namespace PermissionManagement.Web.Data.Migrations
                     b.HasIndex("PageId");
 
                     b.ToTable("Blocks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Block 1",
-                            PageId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Block 2",
-                            PageId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Block 3",
-                            PageId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Block 4",
-                            PageId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Block 5",
-                            PageId = 2
-                        });
                 });
 
             modelBuilder.Entity("PermissionManagement.Web.Models.Page", b =>
@@ -281,23 +251,6 @@ namespace PermissionManagement.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Page 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Page 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Permissions Management"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -353,11 +306,13 @@ namespace PermissionManagement.Web.Data.Migrations
 
             modelBuilder.Entity("PermissionManagement.Web.Models.Block", b =>
                 {
-                    b.HasOne("PermissionManagement.Web.Models.Page", null)
+                    b.HasOne("PermissionManagement.Web.Models.Page", "Page")
                         .WithMany("PageBlocks")
                         .HasForeignKey("PageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Page");
                 });
 
             modelBuilder.Entity("PermissionManagement.Web.Models.Page", b =>

@@ -16,12 +16,11 @@ namespace PermissionManagement.Web.Seeds
             };
             var User = await userManager.FindByEmailAsync(AdminUser.Email);
 
-            if (User != null)
+            if (User == null)
             {
-                await userManager.CreateAsync(User, "P@ssw0rd");
-                await userManager.AddToRoleAsync(User, Roles.Administrator.ToString());
+                await userManager.CreateAsync(AdminUser, "P@ssw0rd");
+                await userManager.AddToRoleAsync(AdminUser, Roles.Administrator.ToString());
             }
-
         }
 
         public static async Task SeedMemberAsync(UserManager<IdentityUser> userManager)
@@ -36,7 +35,7 @@ namespace PermissionManagement.Web.Seeds
                     EmailConfirmed = true
                 };
                 var user = await userManager.FindByEmailAsync(member.Email);
-                if (user != null)
+                if (user == null)
                 {
                     await userManager.CreateAsync(member, "P@ssw0rd");
                     await userManager.AddToRoleAsync(member, Roles.Member.ToString());

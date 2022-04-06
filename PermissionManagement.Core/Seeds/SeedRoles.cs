@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PermissionManagement.Web.Constants;
+using System.Security.Claims;
 
 namespace PermissionManagement.Web.Seeds
 {
@@ -13,5 +15,19 @@ namespace PermissionManagement.Web.Seeds
                 await roleManager.CreateAsync(new IdentityRole(Roles.Member.ToString()));
             }
         }
+
+        //TODO : Add member role default claims
+        //public static async Task SeedMemberClaimsAsync(RoleManager<IdentityRole> roleManager, IdentityDbContext dbContext)
+        //{
+        //    var role = await roleManager.FindByNameAsync(Roles.Member.ToString());
+        //    if (role != null)
+        //    {
+        //        foreach (var view in dbContext.)
+        //        {
+
+        //        }
+        //    }
+
+        //}
     }
 }

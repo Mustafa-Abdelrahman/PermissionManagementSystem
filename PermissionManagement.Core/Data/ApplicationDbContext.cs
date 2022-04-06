@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PermissionManagement.Web.Models;
 
 namespace PermissionManagement.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<Block> Blocks { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -26,6 +29,7 @@ namespace PermissionManagement.Web.Data
                                            .Ignore(c => c.LockoutEnabled)
                                            .Ignore(c => c.PhoneNumberConfirmed)
                                            .Ignore(c => c.TwoFactorEnabled);
+          
         }
     }
 }

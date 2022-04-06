@@ -28,10 +28,9 @@ namespace PermissionManagement.Web.Seeds
                 for (int i = 0; i < pages.Count; i++)
                 {
                     string pageName = pages[i].Name;
-                    if (!allClaims.Any(c => c.Type == "View" && c.Value == pageName) && pageName != "Permissions Management")
+                    if (!allClaims.Any(c => c.Type == "View" && c.Value == pageName) && pageName != Pages.PermissionsManagement.ToString())
                     {
                         await roleManager.AddClaimAsync(role, new Claim("View", pageName));
-
                     }
                 }
 
@@ -50,8 +49,8 @@ namespace PermissionManagement.Web.Seeds
             var role = await roleManager.FindByNameAsync(Roles.Administrator.ToString());
             var allClaims = await roleManager.GetClaimsAsync(role);
 
-            if (role != null && !allClaims.Any(c => c.Type == "View" && c.Value == "Permissions Management"))
-                await roleManager.AddClaimAsync(role, new Claim("View", dbContext.Pages.First(p => p.Name == "Permissions Management").Name));
+            if (role != null && !allClaims.Any(c => c.Type == "View" && c.Value == Pages.PermissionsManagement.ToString()))
+                await roleManager.AddClaimAsync(role, new Claim("View", dbContext.Pages.First(p => p.Name == Pages.PermissionsManagement.ToString()).Name));
         }
     }
 }

@@ -3,6 +3,7 @@
     public enum Pages
     {
         Page1,
-        Page2
+        Page2,
+        PermissionsManagement
     }
 }

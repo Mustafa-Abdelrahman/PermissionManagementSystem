@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PermissionManagement.Web.Enums;
+using PermissionManagement.Web.Constants;
 
 namespace PermissionManagement.Web.Seeds
 {

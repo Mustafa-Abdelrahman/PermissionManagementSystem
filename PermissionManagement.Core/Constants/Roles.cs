@@ -1,4 +1,4 @@
-﻿namespace PermissionManagement.Web.Enums
+﻿namespace PermissionManagement.Web.Constants
 {
     public enum Roles
     {

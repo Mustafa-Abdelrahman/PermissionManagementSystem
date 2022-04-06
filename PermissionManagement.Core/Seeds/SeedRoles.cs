@@ -20,23 +20,22 @@ namespace PermissionManagement.Web.Seeds
         {
             var role = await roleManager.FindByNameAsync(Roles.Member.ToString());
             var allClaims = await roleManager.GetClaimsAsync(role);
-            var pages = dbContext.Pages.ToList();
-            var blocks = dbContext.Blocks.ToList();
+            var pages = Enum.GetValues(typeof(Pages)).Cast<Pages>().ToList();
+            var blocks = Enum.GetValues(typeof(Pages)).Cast<Blocks>().ToList();
 
             if (role != null)
             {
-                for (int i = 0; i < pages.Count; i++)
+                foreach (var page in pages)
                 {
-                    string pageName = pages[i].Name;
-                    if (!allClaims.Any(c => c.Type == "View" && c.Value == pageName) && pageName != Pages.PermissionsManagement.ToString())
+                    string pageName = page.ToString();
+                    if (!allClaims.Any(c => c.Type == "View" && c.Value == pageName) && page != Pages.PermissionsManagement)
                     {
                         await roleManager.AddClaimAsync(role, new Claim("View", pageName));
                     }
                 }
-
-                for (int i = 0; i < blocks.Count; i++)
+                foreach (var block in blocks)
                 {
-                    var blockName = blocks[i].Name;
+                    var blockName = block.ToString();
                     if (!allClaims.Any(c => c.Type == "View" && c.Value == blockName))
                     {
                         await roleManager.AddClaimAsync(role, new Claim("View", blockName));
@@ -50,7 +49,7 @@ namespace PermissionManagement.Web.Seeds
             var allClaims = await roleManager.GetClaimsAsync(role);
 
             if (role != null && !allClaims.Any(c => c.Type == "View" && c.Value == Pages.PermissionsManagement.ToString()))
-                await roleManager.AddClaimAsync(role, new Claim("View", dbContext.Pages.First(p => p.Name == Pages.PermissionsManagement.ToString()).Name));
+                await roleManager.AddClaimAsync(role, new Claim("View", Pages.PermissionsManagement.ToString()));
         }
     }
 }

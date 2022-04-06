@@ -30,14 +30,14 @@ namespace PermissionManagement.Web.Data
                                            .Ignore(c => c.PhoneNumberConfirmed)
                                            .Ignore(c => c.TwoFactorEnabled);
 
-            builder.Entity<Page>().HasData(new Page { Id = 1, Name = "Page 1" });
-            builder.Entity<Page>().HasData(new Page { Id = 2, Name = "Page 2" });
-            builder.Entity<Page>().HasData(new Page { Id = 3, Name = "PermissionsManagement" });
-            builder.Entity<Block>().HasData(new Block { Id = 1, Name = "Block 1", PageId = 1 });
-            builder.Entity<Block>().HasData(new Block { Id = 2, Name = "Block 2", PageId = 1 });
-            builder.Entity<Block>().HasData(new Block { Id = 3, Name = "Block 3", PageId = 1 });
-            builder.Entity<Block>().HasData(new Block { Id = 4, Name = "Block 4", PageId = 2 });
-            builder.Entity<Block>().HasData(new Block { Id = 5, Name = "Block 5", PageId = 2 });
+            builder.Entity<Page>().HasData(new Page { Id = 1, Name = Constants.Pages.Page1.ToString() });
+            builder.Entity<Page>().HasData(new Page { Id = 2, Name = Constants.Pages.Page2.ToString() });
+            builder.Entity<Page>().HasData(new Page { Id = 3, Name = Constants.Pages.PermissionsManagement.ToString() });
+            builder.Entity<Block>().HasData(new Block { Id = 1, Name = Constants.Blocks.Block1.ToString(), PageId = 1 });
+            builder.Entity<Block>().HasData(new Block { Id = 2, Name = Constants.Blocks.Block2.ToString(), PageId = 1 });
+            builder.Entity<Block>().HasData(new Block { Id = 3, Name = Constants.Blocks.Block3.ToString(), PageId = 1 });
+            builder.Entity<Block>().HasData(new Block { Id = 4, Name = Constants.Blocks.Block4.ToString(), PageId = 2 });
+            builder.Entity<Block>().HasData(new Block { Id = 5, Name = Constants.Blocks.Block5.ToString(), PageId = 2 });
         }
     }
 }

@@ -24,18 +24,14 @@ namespace PermissionManagement.Web.Security.Filters
                 if (!user.Identity.IsAuthenticated)
                 { 
                     context.Result = new UnauthorizedResult();
-                    return;
                 }
 
-                if (Roles.Any(role => user.IsInRole(role.ToString())))
+                if (!Roles.Any(role => user.IsInRole(role.ToString())))
                 {
-                    context.Result = new AcceptedResult();
-                    return;
+                    context.Result = new UnauthorizedResult();
                 }
 
             }
-            throw new ArgumentNullException(nameof(user));
-
         }
     }
 }

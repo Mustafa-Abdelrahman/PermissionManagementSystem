@@ -2,21 +2,34 @@
 @using Microsoft.AspNetCore.Identity
 @using PermissionManagement.Web.Constants
 @using System.Security.Claims
-@inject SignInManager<IdentityUser> SignInManager
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 
-@if (Model.Any(c => c == Blocks.Block1.ToString()) )
+@if ((await AuthorizationService.AuthorizeAsync(User, "Access Block1")).Succeeded)
 {
-<h2>@Blocks.Block1.ToString()</h2>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">@Blocks.Block1.ToString()</h3>
+        </div>
+    </div>
 }
 
-@if (Model.Any(c => c == Blocks.Block2.ToString()) )
+@if ((await AuthorizationService.AuthorizeAsync(User, "Access Block2")).Succeeded)
 {
-<h2>@Blocks.Block2.ToString()</h2>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">@Blocks.Block2.ToString()</h3>
+        </div>
+    </div>
 }
 
-@if (Model.Any(c => c == Blocks.Block3.ToString()) )
+@if ((await AuthorizationService.AuthorizeAsync(User, "Access Block3")).Succeeded)
 {
-<h2>@Blocks.Block3.ToString()</h2>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">@Blocks.Block3.ToString()</h3>
+        </div>
+    </div>
 }
 

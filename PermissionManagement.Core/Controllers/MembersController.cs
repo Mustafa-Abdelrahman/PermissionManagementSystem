@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace PermissionManagement.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Members Only")]
     public class MembersController : Controller
     {
         public List<string> userClaimsValues { get; set; }
@@ -20,7 +20,12 @@ namespace PermissionManagement.Web.Controllers
             _dbContext = DbContext;
         }
 
-        [Authorize(Policy = "Page1Access")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize(Policy = "Access Page1")]
         public IActionResult Page1()
         {
             var claims = User.Identities.First().Claims.ToList();
@@ -30,7 +35,7 @@ namespace PermissionManagement.Web.Controllers
             return View(userClaimsValues);
         }
 
-        [Authorize(Policy = "Page2Access")]
+        [Authorize(Policy = "Access Page2")]
         public IActionResult Page2()
         {
             GetClaims();

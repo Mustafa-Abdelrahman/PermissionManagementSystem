@@ -22,14 +22,34 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 // policy-based authorization
 builder.Services.AddAuthorization(options =>
 {
-  
-    options.AddPolicy("Page1Access",
-        policy => policy.RequireClaim(ClaimTypes.Webpage, Pages.Page1.ToString())
-                        .RequireRole(Roles.Member.ToString()));
+    #region Members' Policies
+    foreach (Pages page in Enum.GetValues(typeof(Pages)))
+    {
+        if (page != Pages.PermissionsManagement)
+        {
+            options.AddPolicy($"Access {page}",
+       policy => policy.RequireClaim(ClaimTypes.Webpage, page.ToString())
+                       .RequireRole(Roles.Member.ToString()));
+        }
+    }
 
-    options.AddPolicy("Page2Access",
-policy => policy.RequireClaim(ClaimTypes.Webpage, Pages.Page2.ToString())
-                        .RequireRole(Roles.Member.ToString()));
+    foreach (Blocks block in Enum.GetValues(typeof(Blocks)))
+    {
+            options.AddPolicy($"Access {block}",
+       policy => policy.RequireClaim("Block", block.ToString())
+                       .RequireRole(Roles.Member.ToString()));
+    }
+    #endregion
+
+    options.AddPolicy($"Access Permissions Page",
+policy => policy.RequireClaim(ClaimTypes.Webpage, Pages.PermissionsManagement.ToString())
+                .RequireRole(Roles.Administrator.ToString()));
+
+    options.AddPolicy($"Admins Only",
+policy => policy.RequireRole(Roles.Administrator.ToString()));
+
+    options.AddPolicy("Members Only",
+policy => policy.RequireRole(Roles.Member.ToString()));
 
 });
 var app = builder.Build();

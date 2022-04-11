@@ -1,6 +1,27 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model List<string>
+@using Microsoft.AspNetCore.Identity
+@using PermissionManagement.Web.Constants
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+
+@if ((await AuthorizationService.AuthorizeAsync(User, "Access Block4")).Succeeded)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">@Blocks.Block4.ToString()</h3>
+        </div>
+    </div>
 }
-HI
+
+@if ((await AuthorizationService.AuthorizeAsync(User, "Access Block5")).Succeeded)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">@Blocks.Block5.ToString()</h3>
+        </div>
+    </div>
+}
+
+

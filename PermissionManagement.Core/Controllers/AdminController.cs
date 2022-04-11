@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PermissionManagement.Web.Constants;
 using PermissionManagement.Web.Data;
@@ -8,7 +9,8 @@ using System.Security.Claims;
 
 namespace PermissionManagement.Web.Controllers
 {
-    [AuthorizedRole(new Roles[] { Roles.Administrator })]
+    //[AuthorizedRole(new Roles[] { Roles.Administrator })]
+    [Authorize(Policy = "Admins Only")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _dbContext;

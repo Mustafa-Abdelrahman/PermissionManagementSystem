@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PermissionManagement.Web.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace PermissionManagement.Web.ViewModels
 {

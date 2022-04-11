@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PermissionManagement.Web.Constants;
 using PermissionManagement.Web.Data;
-using PermissionManagement.Web.Security.Policies;
 using PermissionManagement.Web.Seeds;
 using System.Security.Claims;
 

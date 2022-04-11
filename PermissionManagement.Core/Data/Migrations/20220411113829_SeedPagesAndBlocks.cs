@@ -10,29 +10,29 @@ namespace PermissionManagement.Web.Data.Migrations
         {
             migrationBuilder.InsertData(
                 table: "Pages",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Page 1" });
+                columns: new[] { "Id", "AssociatedRole", "Name" },
+                values: new object[] { 1, "Member", "Page1" });
 
             migrationBuilder.InsertData(
                 table: "Pages",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Page 2" });
+                columns: new[] { "Id", "AssociatedRole", "Name" },
+                values: new object[] { 2, "Member", "Page2" });
 
             migrationBuilder.InsertData(
                 table: "Pages",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "Permissions Management" });
+                columns: new[] { "Id", "AssociatedRole", "Name" },
+                values: new object[] { 3, "Administrator", "PermissionsManagement" });
 
             migrationBuilder.InsertData(
                 table: "Blocks",
                 columns: new[] { "Id", "Name", "PageId" },
                 values: new object[,]
                 {
-                    { 1, "Block 1", 1 },
-                    { 2, "Block 2", 1 },
-                    { 3, "Block 3", 1 },
-                    { 4, "Block 4", 2 },
-                    { 5, "Block 5", 2 }
+                    { 1, "Block1", 1 },
+                    { 2, "Block2", 1 },
+                    { 3, "Block3", 1 },
+                    { 4, "Block4", 2 },
+                    { 5, "Block5", 2 }
                 });
         }
 

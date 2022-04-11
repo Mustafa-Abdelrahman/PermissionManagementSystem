@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace PermissionManagement.Web.Models
 {
@@ -7,7 +8,7 @@ namespace PermissionManagement.Web.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public List<Block> PageBlocks { get; set; }
+        public string AssociatedRole { get; set; }
+        public ICollection<Block> PageBlocks { get; set; }
     }
 }

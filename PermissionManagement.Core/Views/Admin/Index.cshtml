@@ -31,7 +31,7 @@
             console.log('hi');
             var SelectedUserId = document.getElementById("UsersList").value;
 
-            var url = '@Url.Action("Index", "Admin")' + '?userId=' + SelectedUserId;
+            var url = '@Url.Action("Index", "Permissions")' + '?userId=' + SelectedUserId;
             console.log(url)
             $.get(url, function(data){
                 $('#partialViewPlaceHolder').html(data);

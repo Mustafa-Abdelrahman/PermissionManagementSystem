@@ -208,6 +208,101 @@ namespace PermissionManagement.Web.Data.Migrations
                     b.ToTable("UserTokens", "security");
                 });
 
+            modelBuilder.Entity("PermissionManagement.Web.Models.Block", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PageId");
+
+                    b.ToTable("Blocks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Block1",
+                            PageId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Block2",
+                            PageId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Block3",
+                            PageId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Block4",
+                            PageId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Block5",
+                            PageId = 2
+                        });
+                });
+
+            modelBuilder.Entity("PermissionManagement.Web.Models.Page", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AssociatedRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AssociatedRole = "Member",
+                            Name = "Page1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AssociatedRole = "Member",
+                            Name = "Page2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AssociatedRole = "Administrator",
+                            Name = "PermissionsManagement"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -257,6 +352,20 @@ namespace PermissionManagement.Web.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PermissionManagement.Web.Models.Block", b =>
+                {
+                    b.HasOne("PermissionManagement.Web.Models.Page", null)
+                        .WithMany("PageBlocks")
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PermissionManagement.Web.Models.Page", b =>
+                {
+                    b.Navigation("PageBlocks");
                 });
 #pragma warning restore 612, 618
         }

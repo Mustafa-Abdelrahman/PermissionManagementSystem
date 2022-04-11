@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PermissionManagement.Web.Data;
 using PermissionManagement.Web.ViewModels;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace PermissionManagement.Web.Controllers
 {
@@ -31,13 +33,19 @@ namespace PermissionManagement.Web.Controllers
 
             if (userRole != null)
             {
-                var roleClaims = _roleManager.GetClaimsAsync(userRole).Result.ToList();
-
+                var rolePages = _dbContext.Pages.Where(p => p.AssociatedRole == userRole.Name).Include(pb => pb.PageBlocks).ToList();
+                
                 var userClaims = _dbContext.UserClaims.Where(uc => uc.UserId == userId).Select(x => x.ClaimValue).ToList();
 
+                foreach (var page in rolePages)
+                {
+                    viewModel.UserSelectedClaims.Add(new PermissionVM { Value = page.Name, Type = ClaimTypes.Webpage, IsSelected = userClaims.Contains(page.Name) });
 
-                roleClaims.ForEach(roleClaim => viewModel.UserSelectedClaims
-                               .Add(new PermissionVM { Value = roleClaim.Value, Type = roleClaim.Type, IsSelected = userClaims.Contains(roleClaim.Value) }));
+                    foreach (var block in page.PageBlocks)
+                    {
+                        viewModel.UserSelectedClaims.Add(new PermissionVM { Value = block.Name, Type = "Block", IsSelected = userClaims.Contains(block.Name) });
+                    }
+                }
             }
             return PartialView("_PermissionsFormPartial", viewModel);
         }
@@ -47,8 +55,6 @@ namespace PermissionManagement.Web.Controllers
         {
             if (editPermissionsVM.UserId != null)
             {
-                //var userClaims = _dbContext.UserClaims.Where(x => x.UserId == editPermissionsVM.UserId).ToList();
-                //_dbContext.UserClaims.RemoveRange(userClaims);
                 var user =  await _userManager.FindByIdAsync(editPermissionsVM.UserId);
                 var identityClaims = await _userManager.GetClaimsAsync(user);
 
@@ -61,13 +67,10 @@ namespace PermissionManagement.Web.Controllers
                 foreach (var claim in selectedClaims)
                 {
                     await _userManager.AddClaimAsync(user, new Claim(claim.Type, claim.Value));
-                    //_dbContext.Add(new IdentityUserClaim<string> { UserId = editPermissionsVM.UserId, ClaimType = claim.Type, ClaimValue = claim.Value });
                 }
 
-
-                //_dbContext.SaveChanges();
             }
-            return RedirectToAction("Index", "Permissions");
+            return RedirectToAction("Index", "Admin");
         }
     }
 }

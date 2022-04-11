@@ -25,6 +25,7 @@ namespace PermissionManagement.Web.Controllers
         {
             var claims = User.Identities.First().Claims.ToList();
 
+            
             GetClaims();
             return View(userClaimsValues);
         }

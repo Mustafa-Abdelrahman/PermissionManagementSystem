@@ -21,10 +21,9 @@ body {
 
 }
 
-.margin{
-    margin-top:25px;
-
+.ParentcheckBox {
+    margin-top: 25px;
 }
-.checkBoxChild {
+.ChildcheckBox {
     margin-left: 25px;
 }

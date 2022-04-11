@@ -12,8 +12,8 @@ using PermissionManagement.Web.Data;
 namespace PermissionManagement.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220406140235_SeedPagesAndBlocks")]
-    partial class SeedPagesAndBlocks
+    [Migration("20220411112839_addPageAndBlockEntities")]
+    partial class addPageAndBlockEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,12 +157,10 @@ namespace PermissionManagement.Web.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -199,12 +197,10 @@ namespace PermissionManagement.Web.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -234,38 +230,6 @@ namespace PermissionManagement.Web.Data.Migrations
                     b.HasIndex("PageId");
 
                     b.ToTable("Blocks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Block 1",
-                            PageId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Block 2",
-                            PageId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Block 3",
-                            PageId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Block 4",
-                            PageId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Block 5",
-                            PageId = 2
-                        });
                 });
 
             modelBuilder.Entity("PermissionManagement.Web.Models.Page", b =>
@@ -276,6 +240,10 @@ namespace PermissionManagement.Web.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AssociatedRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -283,23 +251,6 @@ namespace PermissionManagement.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Page 1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Page 2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Permissions Management"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -4,6 +4,7 @@
 
 @{
     List<SelectListItem> selectList = new List<SelectListItem>();
+    selectList.Add(new SelectListItem { Text = "Select a user", Value = "0", Selected = true });
     int i = 0;
     string userId = ViewBag.SelectedUserId;
 

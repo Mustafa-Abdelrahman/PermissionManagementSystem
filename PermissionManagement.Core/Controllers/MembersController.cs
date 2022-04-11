@@ -27,10 +27,7 @@ namespace PermissionManagement.Web.Controllers
 
         [Authorize(Policy = "Access Page1")]
         public IActionResult Page1()
-        {
-            var claims = User.Identities.First().Claims.ToList();
-
-            
+        {   
             GetClaims();
             return View(userClaimsValues);
         }

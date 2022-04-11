@@ -1,0 +1,98 @@
+﻿@using PermissionManagement.Web.Constants
+@model PermissionManagement.Web.ViewModels.EditPermissionsVM
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Permissions" asp-action="SavePermissions" method="post">
+            <input asp-for="@Model.UserId" type="hidden" class="form-control" />
+            @*<input asp-for="@Model.UserSelectedClaims" type="hidden" class="form-control" />*@
+
+            <div class="form-group">
+                <table class="table table-striped">
+                    @for (var i = 0; i < Model.UserSelectedClaims.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model.UserSelectedClaims[i].Value" />
+                                <input type="hidden" asp-for="@Model.UserSelectedClaims[i].Type" />
+
+                                <input asp-for="@Model.UserSelectedClaims[i].IsSelected" class="form-check-input" />
+                                </td>
+                                <td>
+                                <label class="form-check-label" asp-for="@Model.UserSelectedClaims[i].IsSelected">@Model.UserSelectedClaims[i].Value</label>
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+
+            <div class="form-group" style="margin-top:50px">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div class="checkBoxParent">
+
+    <input type="hidden" asp-for="@page1.ViewName"/>
+
+    @Html.CheckBoxFor(m => m.UserSelectedClaims.First(x=> x.ViewName== @Pages.Page1.ToString()).IsSelected)
+    <label class="form-check-label" asp-for="@page1.ViewName"></label>
+
+    <input type="checkbox" value="@Pages.Page1.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Pages.Page1.ToString()).IsSelected" />
+    <label>@Pages.Page1.ToString()</label>
+
+    </div>
+
+    <div class="checkBoxChild">
+
+    <input type="checkbox" value="@Blocks.Block1.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Blocks.Block1.ToString()).IsSelected" />
+    <label>@Blocks.Block1.ToString()</label>
+
+    </div>
+
+    <div class="checkBoxChild">
+
+    <input type="checkbox" value="@Blocks.Block2.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Blocks.Block2.ToString()).IsSelected" />
+    <label>@Blocks.Block2.ToString()</label>
+
+    </div>
+
+    <div class="checkBoxChild">
+
+    <input type="checkbox" value="@Blocks.Block3.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Blocks.Block3.ToString()).IsSelected" />
+    <label>@Blocks.Block3.ToString()</label>
+
+    </div>
+
+
+    <div class="checkBoxParent">
+
+    <input type="checkbox" value="@Pages.Page2.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Pages.Page2.ToString()).IsSelected" />
+    <label>@Pages.Page2.ToString()</label>
+
+    </div>
+
+    <div class="checkBoxChild">
+
+    <input type="checkbox" value="@Blocks.Block4.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Blocks.Block4.ToString()).IsSelected" />
+    <label>@Blocks.Block4.ToString()</label>
+
+    </div>
+
+    <div class="checkBoxChild">
+
+    <input type="checkbox" value="@Blocks.Block5.ToString()"
+    checked="@Model.UserSelectedClaims.First(x=> x.ViewName==@Blocks.Block5.ToString()).IsSelected" />
+    <label>@Blocks.Block5.ToString()</label>
+
+    </div>
+*@               

@@ -1,0 +1,43 @@
+﻿@using PermissionManagement.Web.Constants
+@using PermissionManagement.Web.ViewModels
+@model PermissionManagement.Web.ViewModels.UsersPermissionsVM
+
+@{
+    List<SelectListItem> selectList = new List<SelectListItem>();
+    int i = 0;
+    string userId = ViewBag.SelectedUserId;
+
+    if (Model != null)
+    {
+         Model.AllUsers.ForEach(u => selectList.Add(new SelectListItem { Text = u.UserName, Value = u.Id }));
+    }
+
+}
+<h2>Permissions</h2>
+
+<hr />
+
+<div>
+    @Html.DropDownList("Users List", selectList, new {id = "UsersList", @class="usersList"})
+</div>
+
+<div class="margin" id="partialViewPlaceHolder"></div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#UsersList").on("change", function () {
+            console.log('hi');
+            var SelectedUserId = document.getElementById("UsersList").value;
+
+            var url = '@Url.Action("Index", "Admin")' + '?userId=' + SelectedUserId;
+            console.log(url)
+            $.get(url, function(data){
+                $('#partialViewPlaceHolder').html(data);
+                $('#partialViewPlaceHolder').fadeIn('slow');
+            })
+
+        });
+    })
+</script>

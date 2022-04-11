@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PermissionManagement.Web.Models;
+using PermissionManagement.Web.ViewModels;
 
 namespace PermissionManagement.Web.Data
 {
@@ -28,5 +29,7 @@ namespace PermissionManagement.Web.Data
                                            .Ignore(c => c.PhoneNumberConfirmed)
                                            .Ignore(c => c.TwoFactorEnabled);
         }
+
+        public DbSet<PermissionManagement.Web.ViewModels.EditPermissionsVM> EditPermissionsVM { get; set; }
     }
 }

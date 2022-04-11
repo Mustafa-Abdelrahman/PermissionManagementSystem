@@ -1,22 +1,40 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PermissionManagement.Web.Constants;
 using PermissionManagement.Web.Data;
+using PermissionManagement.Web.Security.Policies;
 using PermissionManagement.Web.Seeds;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI();
-builder.Services.AddControllersWithViews();
+// policy-based authorization
+builder.Services.AddAuthorization(options =>
+{
+  
+    options.AddPolicy("Page1Access",
+        policy => policy.RequireClaim(ClaimTypes.Webpage, Pages.Page1.ToString())
+                        .RequireRole(Roles.Member.ToString()));
 
+    options.AddPolicy("Page2Access",
+policy => policy.RequireClaim(ClaimTypes.Webpage, Pages.Page2.ToString())
+                        .RequireRole(Roles.Member.ToString()));
+
+});
 var app = builder.Build();
+
 
 using (var scope  = app.Services.CreateScope())
 {
@@ -31,8 +49,6 @@ using (var scope  = app.Services.CreateScope())
         var dbContext = services.GetRequiredService<ApplicationDbContext>();
 
         await SeedRoles.SeedRolesAsync(roleManager);
-        await SeedRoles.SeedMemberClaimsAsync(roleManager, dbContext);
-        await SeedRoles.SeedAdminClaimsAsync(roleManager, dbContext);
         logger.Log(LogLevel.Information, "Roles Seeding Completed.");
 
         await SeedUsers.SeedAdminAsync(userManager);

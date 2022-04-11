@@ -1,0 +1,22 @@
+﻿@model List<string>
+@using Microsoft.AspNetCore.Identity
+@using PermissionManagement.Web.Constants
+@using System.Security.Claims
+@inject SignInManager<IdentityUser> SignInManager
+
+
+@if (Model.Any(c => c == Blocks.Block1.ToString()) )
+{
+<h2>@Blocks.Block1.ToString()</h2>
+}
+
+@if (Model.Any(c => c == Blocks.Block2.ToString()) )
+{
+<h2>@Blocks.Block2.ToString()</h2>
+}
+
+@if (Model.Any(c => c == Blocks.Block3.ToString()) )
+{
+<h2>@Blocks.Block3.ToString()</h2>
+}
+

@@ -26,7 +26,7 @@ namespace PermissionManagement.Web.Business.Services
 
         public async Task<MembersListVM> GetMembersPermissionsVMAsync()
         {
-            var allMembers = await this.GetAllMembersAsync(userService.GetUserAsync().Result.Id);
+            var allMembers = await this.GetAllMembersAsync(userService.GetLoggedInUserAsync().Result.Id);
             return new MembersListVM { AllMembers = allMembers, SelectedUserId = string.Empty };
         }
 

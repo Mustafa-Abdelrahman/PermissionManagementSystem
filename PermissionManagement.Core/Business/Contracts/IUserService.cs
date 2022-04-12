@@ -6,7 +6,7 @@ namespace PermissionManagement.Web.Business.Contracts
 {
     public interface IUserService
     {
-        Task<IdentityUser> GetUserAsync();
+        Task<IdentityUser> GetLoggedInUserAsync();
         Task<List<string>> GetUserClaimsStringValuesAsync(string id ="");
         Task<IdentityRole> GetUserRoleAsync(string Id);
 

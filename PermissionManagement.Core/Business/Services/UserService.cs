@@ -25,7 +25,7 @@ namespace PermissionManagement.Web.Business.Services
             this.httpContext = httpContextAccessor.HttpContext;
         }
 
-        public async Task<IdentityUser> GetUserAsync()
+        public async Task<IdentityUser> GetLoggedInUserAsync()
         {
             if (httpContext is not null)
                 return await userManager.GetUserAsync(httpContext.User);
@@ -37,10 +37,9 @@ namespace PermissionManagement.Web.Business.Services
         public async Task<List<string>> GetUserClaimsStringValuesAsync(string id = "")
         {
             if (string.IsNullOrEmpty(id))
-                   return await dbContext.UserClaims.Where(c => c.UserId == GetUserAsync().Result.Id).Select(claim => claim.ClaimValue).ToListAsync();
+                   return await dbContext.UserClaims.Where(c => c.UserId == GetLoggedInUserAsync().Result.Id).Select(claim => claim.ClaimValue).ToListAsync();
 
             return await dbContext.UserClaims.Where(c => c.UserId == id).Select(claim => claim.ClaimValue).ToListAsync();
-
         }
 
         public async Task<IdentityRole> GetUserRoleAsync(string Id)

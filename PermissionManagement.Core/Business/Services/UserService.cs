@@ -41,6 +41,11 @@ namespace PermissionManagement.Web.Business.Services
 
             return await dbContext.UserClaims.Where(c => c.UserId == id).Select(claim => claim.ClaimValue).ToListAsync();
         }
+        public async Task<List<IdentityUser>> GetUsersInRoleAsync(string roleName)
+        {
+            var users = await userManager.GetUsersInRoleAsync(roleName);
+            return users.ToList();
+        }
 
         public async Task<IdentityRole> GetUserRoleAsync(string Id)
         {

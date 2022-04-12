@@ -9,7 +9,7 @@ namespace PermissionManagement.Web.Business.Contracts
         Task<IdentityUser> GetLoggedInUserAsync();
         Task<List<string>> GetUserClaimsStringValuesAsync(string id ="");
         Task<IdentityRole> GetUserRoleAsync(string Id);
-
+        Task<List<IdentityUser>> GetUsersInRoleAsync(string roleName);
         Task<UserAuthorizationVM> GetUserAuthorizationVM(string Id);
         Task SaveClaimsAsync(UserAuthorizationVM editedPermissionsVM);
     }

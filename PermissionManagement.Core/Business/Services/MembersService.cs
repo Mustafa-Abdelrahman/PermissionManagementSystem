@@ -19,14 +19,14 @@ namespace PermissionManagement.Web.Business.Services
             this.userService = userService;
         }
 
-        public Task<List<IdentityUser>> GetAllMembersAsync(string adminId)
+        public async Task<List<IdentityUser>> GetAllMembersAsync(string adminId)
         {
-           return  dbContext.Users.Where(u => u.Id != adminId).OrderBy(x => x.UserName).ToListAsync();
+           return await userService.GetUsersInRoleAsync(Roles.Member.ToString());
         }
 
         public async Task<MembersListVM> GetMembersPermissionsVMAsync()
         {
-            var allMembers = await this.GetAllMembersAsync(userService.GetLoggedInUserAsync().Result.Id);
+            var allMembers = await this.GetAllMembersAsync(userService.GetLoggedInUserAsync().Result.Id); // assuming the logged in User is an admin
             return new MembersListVM { AllMembers = allMembers, SelectedUserId = string.Empty };
         }
 

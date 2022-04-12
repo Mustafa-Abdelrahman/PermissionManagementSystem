@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PermissionManagement.Web.Constants;
+using PermissionManagement.Web.Data.Constants;
 using PermissionManagement.Web.Data;
-using PermissionManagement.Web.Seeds;
+using PermissionManagement.Web.Data.Seeds;
 using System.Security.Claims;
+using PermissionManagement.Web.Business.Contracts;
+using PermissionManagement.Web.Business.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IMembersService, MembersService>();
+
 // policy-based authorization
 builder.Services.AddAuthorization(options =>
 {

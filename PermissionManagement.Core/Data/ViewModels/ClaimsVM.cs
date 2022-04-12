@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PermissionManagement.Web.ViewModels
+namespace PermissionManagement.Web.Data.ViewModels
 {
-    public class PermissionVM
+    public class ClaimsVM
     {
         [Key]
         public string Value { get; set; }

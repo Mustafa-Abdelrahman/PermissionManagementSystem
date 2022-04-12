@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using PermissionManagement.Web.Constants;
-using PermissionManagement.Web.Data;
-using System.Security.Claims;
+using PermissionManagement.Web.Data.Constants;
 
-namespace PermissionManagement.Web.Seeds
+namespace PermissionManagement.Web.Data.Seeds
 {
     public static class SeedRoles
     {

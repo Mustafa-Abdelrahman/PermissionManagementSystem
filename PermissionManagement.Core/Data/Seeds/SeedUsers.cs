@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PermissionManagement.Web.Constants;
+using PermissionManagement.Web.Data.Constants;
 
-namespace PermissionManagement.Web.Seeds
+namespace PermissionManagement.Web.Data.Seeds
 {
     public static class SeedUsers
     {

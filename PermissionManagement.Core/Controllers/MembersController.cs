@@ -2,22 +2,22 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using PermissionManagement.Web.Constants;
+using PermissionManagement.Web.Data.Constants;
 using PermissionManagement.Web.Data;
 using PermissionManagement.Web.Security.Filters;
 using System.Security.Claims;
+using PermissionManagement.Web.Business.Contracts;
 
 namespace PermissionManagement.Web.Controllers
 {
     [Authorize(Policy = "Members Only")]
     public class MembersController : Controller
     {
-        public List<string> userClaimsValues { get; set; }
-        private ApplicationDbContext _dbContext;
-           
-        public MembersController(ApplicationDbContext DbContext)
+        private readonly IUserService userService;
+
+        public MembersController(IUserService userService)
         {
-            _dbContext = DbContext;
+            this.userService = userService;
         }
 
         public IActionResult Index()
@@ -26,23 +26,18 @@ namespace PermissionManagement.Web.Controllers
         }
 
         [Authorize(Policy = "Access Page1")]
-        public IActionResult Page1()
+        public async Task<IActionResult> Page1()
         {   
-            GetClaims();
-            return View(userClaimsValues);
+            var userclaims = await userService.GetUserClaimsStringValuesAsync();
+            return View(userclaims);
         }
 
         [Authorize(Policy = "Access Page2")]
-        public IActionResult Page2()
+        public async Task<IActionResult> Page2()
         {
-            GetClaims();
-            return View(userClaimsValues);
+            var userclaims = await userService.GetUserClaimsStringValuesAsync();
+            return View(userclaims);
         }
 
-        private void GetClaims()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            userClaimsValues = _dbContext.UserClaims.Where(c=> c.UserId == userId).Select(claim => claim.ClaimValue).ToList();
-        }
     }
 }

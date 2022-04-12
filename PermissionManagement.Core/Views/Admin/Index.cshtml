@@ -1,6 +1,6 @@
-﻿@using PermissionManagement.Web.Constants
-@using PermissionManagement.Web.ViewModels
-@model PermissionManagement.Web.ViewModels.UsersPermissionsVM
+﻿@using PermissionManagement.Web.Data.Constants
+@using PermissionManagement.Web.Data.ViewModels
+@model PermissionManagement.Web.Data.ViewModels.MembersListVM
 
 @{
     List<SelectListItem> selectList = new List<SelectListItem>();
@@ -10,7 +10,7 @@
 
     if (Model != null)
     {
-         Model.AllUsers.ForEach(u => selectList.Add(new SelectListItem { Text = u.UserName, Value = u.Id }));
+         Model.AllMembers.ForEach(u => selectList.Add(new SelectListItem { Text = u.UserName, Value = u.Id }));
     }
 
 }

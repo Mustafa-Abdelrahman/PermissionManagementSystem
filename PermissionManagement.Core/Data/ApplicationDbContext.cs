@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PermissionManagement.Web.Models;
-using PermissionManagement.Web.ViewModels;
 
 namespace PermissionManagement.Web.Data
 {

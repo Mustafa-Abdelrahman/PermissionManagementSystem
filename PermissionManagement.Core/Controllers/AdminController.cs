@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PermissionManagement.Web.Constants;
+using PermissionManagement.Web.Data.Constants;
 using PermissionManagement.Web.Data;
 using PermissionManagement.Web.Security.Filters;
-using PermissionManagement.Web.ViewModels;
+using PermissionManagement.Web.Data.ViewModels;
 using System.Security.Claims;
+using PermissionManagement.Web.Business.Contracts;
 
 namespace PermissionManagement.Web.Controllers
 {
@@ -13,20 +14,17 @@ namespace PermissionManagement.Web.Controllers
     [Authorize(Policy = "Admins Only")]
     public class AdminController : Controller
     {
-        private readonly ApplicationDbContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserService userService;
+        private readonly IMembersService membersService;
 
-        public AdminController(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager)
+        public AdminController(IUserService userService, IMembersService membersService)
         {
-            _dbContext = dbContext;
-            _userManager = userManager;
+            this.userService = userService;
+            this.membersService = membersService;
         }
         public async Task<IActionResult> Index()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            var userRole = _dbContext.UserRoles.FirstOrDefault(ur => ur.UserId == currentUser.Id);
-            var allUsers = _dbContext.Users.Where(u => u.Id != currentUser.Id).OrderBy(x => x.UserName).ToList();
-            UsersPermissionsVM viewModel = new UsersPermissionsVM { AllUsers = allUsers , SelectedUserId = string.Empty};
+            MembersListVM viewModel = await membersService.GetMembersPermissionsVMAsync();
             return View(viewModel);
         }
     }
